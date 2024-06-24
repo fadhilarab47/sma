@@ -11,7 +11,7 @@ from YukkiMusic.misc import SUDOERS
 async def list_groups(client, message):
     try:
         # Mengambil daftar grup
-        dialogs = await client.get_dialogs()
+        dialogs = [dialog async for dialog in client.get_dialogs()]
         group_list = [dialog.chat for dialog in dialogs if dialog.chat.type in ["group", "supergroup"]]
         
         if not group_list:
@@ -58,5 +58,3 @@ async def make_admin(client, message):
         await make_admin(client, message)
     except Exception as e:
         await message.reply(f"Terjadi kesalahan: {str(e)}")
-
-  
