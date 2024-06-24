@@ -4,9 +4,10 @@ from pyrogram.types import ChatPrivileges
 import time
 
 from YukkiMusic import app
+from YukkiMusic.misc import SUDOERS
 
 
-@app.on_message(filters.command("listgc") & filters.private)
+@app.on_message(filters.command("listgc") & SUDOERS)
 async def list_groups(client, message):
     try:
         # Mengambil daftar grup
@@ -26,7 +27,7 @@ async def list_groups(client, message):
     except Exception as e:
         await message.reply(f"Terjadi kesalahan: {str(e)}")
 
-@app.on_message(filters.command("makeadm") & filters.private)
+@app.on_message(filters.command("makeadm") & SUDOERS)
 async def make_admin(client, message):
     try:
         # Mendapatkan ID grup dari pesan
