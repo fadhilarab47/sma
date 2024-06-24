@@ -6,13 +6,13 @@ import time
 from YukkiMusic import app
 from YukkiMusic.misc import SUDOERS
 
-
 @app.on_message(filters.command("listgc") & SUDOERS)
 async def list_groups(client, message):
     try:
-        # Mengambil daftar grup
-        dialogs = [dialog async for dialog in client.get_dialogs()]
-        group_list = [dialog.chat for dialog in dialogs if dialog.chat.type in ["group", "supergroup"]]
+        group_list = []
+        async for dialog in client.iter_dialogs():
+            if dialog.chat.type in ["group", "supergroup"]:
+                group_list.append(dialog.chat)
         
         if not group_list:
             await message.reply("Bot tidak ada di grup manapun.")
@@ -58,3 +58,4 @@ async def make_admin(client, message):
         await make_admin(client, message)
     except Exception as e:
         await message.reply(f"Terjadi kesalahan: {str(e)}")
+        
