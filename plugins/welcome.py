@@ -1,4 +1,5 @@
 import datetime
+import asyncio
 from re import findall
 
 from pyrogram import filters
@@ -29,7 +30,6 @@ from YukkiMusic.utils.permissions import adminsOnly
 
 
 async def handle_new_member(member, chat):
-
     try:
         if member.id in SUDOERS:
             return
@@ -120,6 +120,10 @@ async def send_welcome_message(chat: Chat, user_id: int, delete: bool = False):
             caption=text,
             reply_markup=keyb,
         )
+    
+    # Hapus pesan setelah 2 menit
+    await asyncio.sleep(120)
+    await m.delete()
 
 
 @app.on_message(filters.command("setwelcome") & ~filters.private)
@@ -236,3 +240,4 @@ Button2=[Gɪᴛʜᴜʙ, ʜᴛᴛᴘs://ɢɪᴛʜᴜʙ.ᴄᴏᴍ]
 
 Cʜᴇᴄᴋᴏᴜᴛ /markdownhelp ᴛᴏ ᴋɴᴏᴡ ᴍᴏʀᴇ ᴀʙᴏᴜᴛ ғᴏʀᴍᴀᴛᴛɪɴɢs ᴀɴᴅ ᴏᴛʜᴇʀ sʏɴᴛᴀx.
 """
+
