@@ -52,11 +52,14 @@ async def handle_left_member(member, chat):
 
 @app.on_message(filters.left_chat_member & filters.group, group=6)
 @capture_err
-async def goodbye(_, m:Message):
-
+async def goodbye(_, m: Message):
+    if m.from_user is None:
+        return  # Skip processing if from_user is None
+    
     member = await app.get_users(m.from_user.id)
     chat = m.chat
     return await handle_left_member(member, chat)
+    
 
 
 async def send_left_message(chat: Chat, user_id: int, delete: bool = False, nothing: bool = False):
@@ -66,7 +69,7 @@ async def send_left_message(chat: Chat, user_id: int, delete: bool = False, noth
         await set_greetings_on(chat.id, "goodbye")
         goodbye = "Animation"
         raw_text = "ʜɪɪ {NAME}  ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ {GROUPNAME}\nɪғ ʏᴏᴜ ʜᴀᴠᴇ ᴀɴʏ ᴘʀᴏʙʟᴇᴍ ᴏʀ ǫᴜᴇsᴛɪᴏɴs ʏᴏᴜ ᴄᴀɴ ᴀsᴋ ʜᴇʀᴇ"
-        file_id = "CgACAgIAAyEFAASFqsojAAIPgGZwFG2XMOMlaC9jgKZSvUtqYchzAALbEgACGtVYSAGHbztDEjlEHgQ"
+        file_id = "CAACAgUAAx0EawM9gwAC8MVmf1MO2vyKTv3TPct-LuL-wJbDnwAClgwAAi54CFXHByhwM6Asvx4E"
         return await set_goodbye(chat.id, goodbye, raw_text, file_id)
 
     if not ison and not nothing:
